@@ -1,24 +1,51 @@
+# ---------------------------------
+# Logs
+# ---------------------------------
 *.log
-.DS_Store
+
+# ---------------------------------
+# Environment files
+# ---------------------------------
 .env
 .env.backup
 .env.production
+
+# ---------------------------------
+# Composer / PHP related
+# ---------------------------------
+/vendor
 .phpactor.json
 .phpunit.result.cache
-/.fleet
-/.idea
-/.nova
 /.phpunit.cache
-/.vscode
-/.zed
 /auth.json
+
+# ---------------------------------
+# Node / Frontend related
+# ---------------------------------
 /node_modules
 /public/build
 /public/hot
-/public/storage
-/storage/*.key
+
+# ---------------------------------
+# Storage / Uploads / Keys
+# ---------------------------------
 /storage/pail
-/vendor
+/storage/*.key
+/public/storage/*   # ユーザーアップロードファイル
+
+# ---------------------------------
+# IDE / Editor / Tools
+# ---------------------------------
+/.idea
+/.vscode
+/.zed
+/.nova
+/.fleet
 Homestead.json
 Homestead.yaml
+
+# ---------------------------------
+# System files
+# ---------------------------------
+.DS_Store
 Thumbs.db
