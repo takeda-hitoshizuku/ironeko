@@ -122,6 +122,7 @@
                 <li><a href="{{ route('events') }}">譲渡会</a></li>
                 <li><a href="{{ route('activity') }}">活動報告</a></li>
                 <li><a href="{{ route('contact') }}">お問い合わせ</a></li>
+                <li><a href="{{ route('privacy') }}">プライバシーポリシー</a></li>
             </ul>
         </nav>
     </header>

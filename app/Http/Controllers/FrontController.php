@@ -86,4 +86,8 @@ class FrontController extends Controller
 
         return redirect()->route('contact')->with('success', 'お問い合わせありがとうございます。内容を確認次第、ご連絡させていただきます。');
     }
+    public function privacy()
+    {
+        return view('front.privacy');
+    }
 }

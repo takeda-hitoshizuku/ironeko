@@ -10,3 +10,4 @@ Route::get('/events', [FrontController::class, 'events'])->name('events');
 Route::get('/activity', [FrontController::class, 'activity'])->name('activity');
 Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::post('/contact', [FrontController::class, 'submitContact'])->name('contact.submit');
+Route::get('/privacy', [FrontController::class, 'privacy'])->name('privacy');
