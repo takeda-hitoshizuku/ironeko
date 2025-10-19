@@ -414,7 +414,7 @@
                 <li><a href="{{ route('favorites') }}">お気に入り ❤️</a></li> <!-- ← ここに追加 -->
                 <li><a href="{{ route('events') }}">譲渡会</a></li>
                 <li><a href="{{ route('requirements') }}">譲渡条件</a></li>
-                <li><a href="{{ route('support') }}">譲渡金/寄付金</a></li>
+                <li><a href="{{ route('support') }}">譲渡金/寄付</a></li>
                 <li><a href="{{ route('activity') }}">活動報告</a></li>
                 <li><a href="{{ route('articles') }}">記事</a></li>
                 <li><a href="{{ route('contact') }}">お問い合わせ</a></li>
@@ -435,7 +435,7 @@
         <nav class="footer-links">
             <a href="{{ route('about') }}">私たちについて</a>
             <span>|</span>
-            <a href="{{ route('support') }}">譲渡金/寄付金</a>
+            <a href="{{ route('support') }}">譲渡金/寄付</a>
             <span>|</span>
             <a href="{{ route('requirements') }}">譲渡条件</a>
             <span>|</span>
