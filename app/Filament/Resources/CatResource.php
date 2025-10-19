@@ -37,6 +37,12 @@ class CatResource extends Resource
                             ->label('名前')
                             ->required()
                             ->maxLength(255),
+
+                        Forms\Components\TextInput::make('breed')
+                            ->label('品種')
+                            ->maxLength(255)
+                            ->placeholder('例: 雑種、アメリカンショートヘア'),
+
                         Forms\Components\TextInput::make('age')
                             ->label('年齢')
                             ->placeholder('例: 2歳3ヶ月、生後6ヶ月')
@@ -133,6 +139,10 @@ class CatResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('名前')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('breed')
+                    ->label('品種')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\ImageColumn::make('images')
                     ->label('画像')
                     ->circular()

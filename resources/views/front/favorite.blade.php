@@ -1,6 +1,6 @@
 @extends('front.layout')
 
-@section('title', '保護猫紹介 | いろねこ')
+@section('title', 'お気に入り | いろねこ')
 
 @section('styles')
     <style>
@@ -13,7 +13,6 @@
             text-align: center;
             position: relative;
             z-index: 0;
-            /* ← これを追加 */
         }
 
         .page-header::before {
@@ -25,51 +24,44 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.4);
             z-index: -1;
-            /* ← 1 から -1 に変更 */
         }
 
         .page-header h1,
         .page-header p {
             position: relative;
             z-index: 1;
-            /* ← 2 から 1 に変更 */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
         }
 
         .cats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 2rem;
+            margin-bottom: 2rem;
         }
 
         .cat-card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
+            position: relative;
         }
 
         .cat-card:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px);
         }
 
         .cat-image {
             width: 100%;
-            height: 300px;
+            height: 250px;
             object-fit: cover;
-        }
-
-        .cat-placeholder {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
         }
 
         .cat-info {
@@ -79,30 +71,6 @@
         .cat-info h3 {
             color: var(--primary-color);
             margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-        }
-
-        .cat-status {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .status-available {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-reserved {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .cat-card-wrapper {
-            position: relative;
         }
 
         .favorite-btn {
@@ -134,7 +102,7 @@
 
         .favorite-count {
             position: absolute;
-            bottom: 5.5rem;
+            bottom: 1rem;
             right: 1rem;
             background: rgba(0, 0, 0, 0.7);
             color: white;
@@ -144,35 +112,52 @@
             display: flex;
             align-items: center;
             gap: 0.3rem;
-            z-index: 10;
+        }
+
+        .no-favorites {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .no-favorites p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .cats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 @endsection
 
 @section('content')
     <section class="page-header" style="background-image: url('{{ asset('images/header.webp') }}');">
-        <h1>保護猫紹介</h1>
-        <p>新しい家族を待っている猫たちです</p>
+        <h1>お気に入り</h1>
+        <p>気になる猫たちをチェック</p>
     </section>
 
-    <x-breadcrumb :items="[['label' => '保護猫一覧', 'url' => '']]" />
+    <!-- パンくずリスト -->
+    <x-breadcrumb :items="[['label' => 'お気に入り', 'url' => '']]" />
 
     <section class="container">
         @if ($cats->count() > 0)
             <div class="cats-grid">
                 @foreach ($cats as $cat)
-                    <div class="cat-card-wrapper" style="position: relative;">
-                        <a class="cat-card" href="{{ route('cats.detail', $cat) }}">
+                    <div class="cat-card">
+                        <a href="{{ route('cats.detail', $cat) }}" style="text-decoration: none; color: inherit;">
                             @if ($cat->images && count($cat->images) > 0)
                                 <img class="cat-image" src="{{ Storage::url($cat->images[0]) }}" alt="{{ $cat->name }}">
                             @else
-                                <div class="cat-placeholder">🐱</div>
+                                <div class="cat-image"
+                                    style="background: linear-gradient(135deg, #f5f5f5, #e0e0e0); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+                                    🐱
+                                </div>
                             @endif
+
                             <div class="cat-info">
-                                <span
-                                    class="cat-status {{ $cat->status === 'available' ? 'status-available' : 'status-reserved' }}">
-                                    {{ $cat->status === 'available' ? '募集中' : '予約済み' }}
-                                </span>
                                 <h3>{{ $cat->name }}</h3>
                                 <p>
                                     <strong>年齢:</strong> {{ $cat->age ?? '不明' }}<br>
@@ -180,16 +165,12 @@
                                     @if ($cat->is_neutered)
                                         （{{ $cat->gender === 'male' ? '去勢' : '避妊' }}済）
                                     @endif
-                                    <br>
-                                    @if ($cat->fur_color)
-                                        <strong>毛色:</strong> {{ $cat->fur_color }}
-                                    @endif
                                 </p>
                             </div>
                         </a>
 
-                        <!-- お気に入りボタン（ループの中、</a>の外） -->
-                        <button class="favorite-btn" data-cat-id="{{ $cat->id }}"
+                        <!-- お気に入りボタン -->
+                        <button class="favorite-btn active" data-cat-id="{{ $cat->id }}"
                             onclick="toggleFavorite(event, {{ $cat->id }})">
                             ❤️
                         </button>
@@ -202,43 +183,21 @@
                 @endforeach
             </div>
         @else
-            <p style="text-align: center; padding: 4rem 0; font-size: 1.2rem;">
-                現在募集中の猫はいません。
-            </p>
+            <div class="no-favorites">
+                <p>お気に入りに追加した猫がまだいません。</p>
+                <a class="btn" href="{{ route('cats') }}">保護猫一覧を見る</a>
+            </div>
         @endif
     </section>
 
     <script>
-        // ページ読み込み時にお気に入り状態を復元
-        document.addEventListener('DOMContentLoaded', function() {
-            updateFavoriteButtons();
-        });
-
-        function updateFavoriteButtons() {
-            fetch('/api/favorites/user', {
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    data.favorites.forEach(catId => {
-                        const btn = document.querySelector(`.favorite-btn[data-cat-id="${catId}"]`);
-                        if (btn) {
-                            btn.classList.add('active');
-                        }
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
         function toggleFavorite(event, catId) {
             event.preventDefault();
             event.stopPropagation();
 
             const btn = event.currentTarget;
             const isActive = btn.classList.contains('active');
-            const url = `/favorites/${catId}`;
+            const url = isActive ? `/favorites/${catId}` : `/favorites/${catId}`;
             const method = isActive ? 'DELETE' : 'POST';
 
             fetch(url, {
@@ -251,7 +210,15 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        btn.classList.toggle('active');
+                        if (isActive) {
+                            // お気に入りから削除 → ページから消す
+                            btn.closest('.cat-card').remove();
+
+                            // 猫がいなくなったら「お気に入りなし」メッセージを表示
+                            if (document.querySelectorAll('.cat-card').length === 0) {
+                                location.reload();
+                            }
+                        }
 
                         // カウント更新
                         const countElement = document.getElementById(`count-${catId}`);

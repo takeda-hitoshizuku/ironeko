@@ -10,6 +10,7 @@ class Inquiry extends Model
     use HasFactory;
 
     protected $fillable = [
+        'cat_id',
         'name',
         'email',
         'phone',
@@ -19,4 +20,9 @@ class Inquiry extends Model
         'status',
         'admin_notes',
     ];
+
+    public function cat()
+    {
+        return $this->belongsTo(Cat::class);
+    }
 }

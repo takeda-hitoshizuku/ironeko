@@ -11,6 +11,7 @@ class Cat extends Model
 
     protected $fillable = [
         'name',
+        'breed',
         'age',
         'birthday',
         'gender',
@@ -36,5 +37,17 @@ class Cat extends Model
     public function adoptionEvents()
     {
         return $this->belongsToMany(AdoptionEvent::class);
+    }
+
+    // リレーション: お気に入り
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    // お気に入り数を取得
+    public function getFavoritesCountAttribute()
+    {
+        return $this->favorites()->count();
     }
 }

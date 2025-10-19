@@ -49,6 +49,11 @@ class InquiryResource extends Resource
                                 'other' => 'その他',
                             ])
                             ->disabled(),
+                        Forms\Components\Select::make('cat_id')
+                            ->label('対象の猫')
+                            ->relationship('cat', 'name')
+                            ->searchable()
+                            ->disabled(),
                         Forms\Components\TextInput::make('subject')
                             ->label('件名')
                             ->disabled(),
@@ -106,6 +111,10 @@ class InquiryResource extends Resource
                         'other' => 'その他',
                         default => $state,
                     }),
+                Tables\Columns\TextColumn::make('cat.name')
+                    ->label('対象の猫')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('subject')
                     ->label('件名')
                     ->limit(30)

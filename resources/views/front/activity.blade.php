@@ -5,15 +5,34 @@
 @section('styles')
     <style>
         .page-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background-size: 100% auto;
+            background-position: center top;
+            background-repeat: no-repeat;
             color: white;
-            padding: 4rem 2rem;
+            padding: 8rem 2rem;
             text-align: center;
+            position: relative;
+            z-index: 0;
+            /* ← これを追加 */
         }
 
-        .page-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+            /* ← 1 から -1 に変更 */
+        }
+
+        .page-header h1,
+        .page-header p {
+            position: relative;
+            z-index: 1;
+            /* ← 2 から 1 に変更 */
         }
 
         .post-card {
@@ -119,10 +138,12 @@
 @endsection
 
 @section('content')
-    <section class="page-header">
+    <section class="page-header" style="background-image: url('{{ asset('images/header.webp') }}');">
         <h1>活動報告</h1>
         <p>いろねこの日々の活動をお伝えします</p>
     </section>
+
+    <x-breadcrumb :items="[['label' => '活動報告', 'url' => '']]" />
 
     <section class="container">
         @forelse($posts as $post)
