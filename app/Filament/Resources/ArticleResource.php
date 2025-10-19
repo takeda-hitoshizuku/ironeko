@@ -55,13 +55,15 @@ class ArticleResource extends Resource
                             ->default(now()),
                     ])->columns(2),
 
-                Forms\Components\Section::make('本文')
-                    ->schema([
-                        Forms\Components\RichEditor::make('content')
-                            ->label('本文')
-                            ->required()
-                            ->columnSpanFull(),
-                    ]),
+            Forms\Components\Section::make('本文')
+                ->schema([
+                    Forms\Components\Textarea::make('content')
+                        ->label('本文（HTML）')
+                        ->required()
+                        ->rows(25)
+                        ->columnSpanFull()
+                        ->helperText('HTMLタグを使用して記事を作成してください'),
+                ]),
 
                 Forms\Components\Section::make('サムネイル画像')
                     ->schema([

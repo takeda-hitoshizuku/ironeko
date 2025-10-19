@@ -63,3 +63,4 @@ Route::get('/sitemap', [FrontController::class, 'sitemap'])->name('sitemap');
 Route::post('/favorites/{cat}', [FrontController::class, 'addFavorite'])->name('favorites.add');
 Route::delete('/favorites/{cat}', [FrontController::class, 'removeFavorite'])->name('favorites.remove');
 Route::get('/favorites', [FrontController::class, 'favorites'])->name('favorites');
+Route::get('/api/favorites/user', [FrontController::class, 'getUserFavorites']);

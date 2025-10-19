@@ -298,6 +298,10 @@
                 transition-delay: 1.0s;
             }
 
+            .nav-links.active li:nth-child(11) {
+                transition-delay: 1.1s;
+            }
+
             .nav-links a {
                 font-size: 1.1rem;
             }
@@ -407,6 +411,7 @@
                 <li><a href="{{ route('home') }}">ホーム</a></li>
                 <li><a href="{{ route('about') }}">私たちについて</a></li>
                 <li><a href="{{ route('cats') }}">保護猫紹介</a></li>
+                <li><a href="{{ route('favorites') }}">お気に入り ❤️</a></li> <!-- ← ここに追加 -->
                 <li><a href="{{ route('events') }}">譲渡会</a></li>
                 <li><a href="{{ route('requirements') }}">譲渡条件</a></li>
                 <li><a href="{{ route('support') }}">譲渡金/寄付金</a></li>

@@ -46,6 +46,7 @@ class Cat extends Model
     }
 
     // お気に入り数を取得
+    // お気に入り数を取得
     public function getFavoritesCountAttribute()
     {
         return $this->favorites()->count();

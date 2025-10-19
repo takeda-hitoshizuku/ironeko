@@ -26,6 +26,8 @@ class UserResource extends Resource
 
     protected static ?string $pluralModelLabel = 'ユーザー一覧';
 
+    protected static ?int $navigationSort = 6;
+
     public static function form(Form $form): Form
     {
         return $form

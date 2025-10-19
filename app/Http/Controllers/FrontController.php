@@ -274,4 +274,15 @@ class FrontController extends Controller
 
         return view('front.favorites', compact('cats'));
     }
+
+    // ユーザーのお気に入り一覧を取得（API）
+    public function getUserFavorites(Request $request)
+    {
+        $sessionId = $request->session()->getId();
+        $favorites = Favorite::where('session_id', $sessionId)->pluck('cat_id');
+
+        return response()->json([
+            'favorites' => $favorites
+        ]);
+    }
 }
